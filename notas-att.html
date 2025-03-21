@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas de Atualização</title>
+    <link rel="icon" type="image/png" href="./Arquivos/Imagens/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        .header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('./Arquivos/Imagens/capa.png');
+            background-size: cover;
+            padding: 1.5rem 2rem;
+            height: 120px;
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .titulo-container {
+            text-align: center;
+        }
+
+        .titulo {
+            color: white;
+            font-size: 1.8em;
+            font-weight: 350;
+            letter-spacing: 0.3px;
+        }
+
+        .subtitulo {
+            color: #e0e0e0;
+            font-size: 1em;
+            font-weight: 300;
+            margin-top: 8px;
+        }
+
+        .main-content {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+            flex: 1;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: #004a8d;
+            top: 0;
+            bottom: 0;
+            left: 50px;
+            margin-left: -1.5px;
+        }
+
+        .update-card {
+            margin-bottom: 30px;
+            position: relative;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .update-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .update-header {
+            background: linear-gradient(135deg, #004a8d, #0066cc);
+            color: white;
+            padding: 12px 20px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .date-badge {
+            background-color: white;
+            color: #004a8d;
+            font-weight: 600;
+            font-size: 0.85em;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        .update-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .update-card.active .update-content {
+            max-height: 500px;
+        }
+
+        .update-details {
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .update-item {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .update-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #004a8d;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #004a8d, #0066cc);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255,165,0,0.3);
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .update-card.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Decoração visual */
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #004a8d;
+            border-radius: 50%;
+            left: 50px;
+            top: 25px;
+            margin-left: -10px;
+            z-index: 1;
+        }
+
+        /* Menu Superior */
+        .menu-superior {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .dropbtn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dropbtn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #004a8d;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.85em;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 12px 12px 0 0;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: auto;
+                padding: 1rem;
+            }
+
+            .titulo {
+                font-size: 1.4em;
+            }
+
+            .subtitulo {
+                font-size: 0.9em;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="titulo-container">
+            <h1 class="titulo">Atualizações da Central de Suporte</h1>
+            <h2 class="subtitulo">Histórico de melhorias e novas funcionalidades</h2>
+        </div>
+
+        <div class="menu-superior">
+            <div class="dropdown">
+                <button class="dropbtn">▼</button>
+                <div class="dropdown-content">
+                    <a href="./index.html">Página Inicial</a>
+                    <a href="./admin-login.html">Acesso ADMIN</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="timeline">
+            <!-- Atualização 14/02/2025 -->
+            <div class="update-card">
+                <div class="timeline-dot"></div>
+                <div class="update-header">
+                    <span>Atualização</span>
+                    <span class="date-badge">14/02/2025</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="update-content">
+                    <div class="update-details">
+                        <div class="update-item">Modificado o CSS para aplicar o efeito amarelo no hover dos menus: Documentos Frequentes e Links úteis</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Atualização 13/02/2025 -->
+            <div class="update-card">
+                <div class="timeline-dot"></div>
+                <div class="update-header">
+                    <span>Atualização</span>
+                    <span class="date-badge">13/02/2025</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="update-content">
+                    <div class="update-details">
+                        <div class="update-item">Adicionado menu de navegação superior</div>
+                        <div class="update-item">Criada página de notas de atualização</div>
+                        <div class="update-item">Melhorias na organização do código</div>
+                        <div class="update-item">Função de pesquisar melhorada</div>
+                        <div class="update-item">Modificada a parte do CSS relacionada aos botões centrais para adicionar o efeito amarelo no hover (página inicial)</div>
+                    </div>
+                </div>
+            </div>
+
+                        <!-- Atualização 14/02/2025 -->
+                        <div class="update-card">
+                            <div class="timeline-dot"></div>
+                            <div class="update-header">
+                                <span>Atualização</span>
+                                <span class="date-badge">27/02/2025</span>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                            <div class="update-content">
+                                <div class="update-details">
+                                    <div class="update-item">Realizado redesign das páginas: Notas de atualização, login de administrador e dashboard</div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+
+        <a href="./index.html" class="back-button">Voltar para a página inicial</a>
+    </div>
+
+    <footer>
+        © 2025 GRC/DGP
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tornar os cartões expansíveis
+            const updateCards = document.querySelectorAll('.update-card');
+            
+            updateCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+
+            // Abrir o primeiro cartão por padrão
+            if (updateCards.length > 0) {
+                updateCards[0].classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

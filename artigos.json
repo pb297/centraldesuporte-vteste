@@ -1,0 +1,346 @@
+{
+  "temas": {
+    "geral": [
+      {
+        "title": "Bem-vindo à Central de Suporte",
+        "content": "Este é o sistema de suporte da GRC/DGP",
+        "keywords": "suporte, ajuda, início",
+        "image": "./Arquivos/Imagens/logo.png"
+      }
+    ],
+    "emprestimo": [
+      {
+        "title": "Como solicitar empréstimo",
+        "content": "Processo para solicitação de empréstimo...",
+        "keywords": "empréstimo, financiamento, solicitação",
+        "url": "./Respostas/emprestimo/como-solicitar.html"
+      }
+    ],
+    "aposentadoria": [
+      {
+        "title": "Documentos para aposentadoria",
+        "content": "Lista de documentos necessários...",
+        "keywords": "aposentadoria, documentos, processo",
+        "url": "./Respostas/aposentadoria/documentos.html"
+      }
+    ]
+  },
+  "categorias": [
+    {
+      "nome": "Empréstimo",
+      "artigos": [
+        {
+          "titulo": "Devolução de parcela cobrada em duplicidade",
+          "data": "31/01/2025",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/devparcela.html"
+        },
+        {
+          "titulo": "Contrato de empréstimo em fase de cobrança judicial",
+          "data": "30/01/2025",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/contrato-cobranca-judicial.html"
+        },
+        {
+          "titulo": "Carteira de empréstimo fechada",
+          "data": "03/02/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/carteira-fechada.html"
+        },
+        {
+          "titulo": "Boleto de parcela inadimplente",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/boleto-inadimplente.html"
+        },
+        {
+          "titulo": "Orientações sobre margem consignável",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/margem-consignavel.html"
+        },
+        {
+          "titulo": "Suspensão de parcelas de empréstimo",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/suspensao-parcelas.html"
+        },
+        {
+          "titulo": "Repactuação automática do contrato",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/repactuacao-automatica.html"
+        },
+        {
+          "titulo": "Renegociação de empréstimo",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/renegociacao.html"
+        },
+        {
+          "titulo": "Contrato inadimplente - Taxa de protesto em aberto",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/taxa-protesto.html"
+        },
+        {
+          "titulo": "Bloqueio - Adesão ao PDV",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/bloqueio-pdv.html"
+        },
+        {
+          "titulo": "Orientações para solicitação de empréstimo",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/orientacoes-solicitacao.html"
+        },
+        {
+          "titulo": "Campanha Quita Fácil",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Emprestimo/campanha-quita-facil.html"
+        }
+      ]
+    },
+    {
+      "nome": "Aposentadoria",
+      "artigos": [
+        {
+          "titulo": "Abono anual - PBD e PostalPrev",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/abono-anual.html"
+        },
+        {
+          "titulo": "Alteração/encerramento do percentual do saldo",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/alteracao-percentual.html"
+        },
+        {
+          "titulo": "Aposentadoria - BAI e BPS-SAI",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/bai-bps-sai.html"
+        },
+        {
+          "titulo": "Reajuste da contribuição extraordinária",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/reajuste-contribuicao.html"
+        },
+        {
+          "titulo": "Crédito na conta salário - Banco do Brasil",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/credito-conta-salario.html"
+        },
+        {
+          "titulo": "Desligado dos Correios com menos de 50 anos de idade",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/desligado-menos-50.html"
+        },
+        {
+          "titulo": "PDV - Recebimento de documentos e inclusão do benefício",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/pdv-documentos.html"
+        },
+        {
+          "titulo": "Hotsite sobre PDV dos Correios",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/hotsite-pdv.html"
+        },
+        {
+          "titulo": "Recadastramento de aposentados - 2022",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/recadastramento-2022.html"
+        },
+        {
+          "titulo": "Requerimento de BAA e BAN",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/requerimento-baa-ban.html"
+        },
+        {
+          "titulo": "Requerimento de BAI para Participante com débito",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/requerimento-bai-debito.html"
+        },
+        {
+          "titulo": "Revisão de BPS - Participante ativo",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/revisao-bps.html"
+        },
+        {
+          "titulo": "SAI - Suplementação de Aposentadoria por Invalidez (Plano BDZÃO)",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/sai-invalidez.html"
+        },
+        {
+          "titulo": "Simulação de benefício",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/simulacao-beneficio.html"
+        },
+        {
+          "titulo": "Documentos para aposentadoria",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Aposentadoria/documentos-aposentadoria.html"
+        }
+      ]
+    },
+    {
+      "nome": "Auxílio Doença",
+      "artigos": [
+        {
+          "titulo": "BAD negativo",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/AuxilioDoenca/bad-negativo.html"
+        },
+        {
+          "titulo": "Transformação - BAD/BAI",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/AuxilioDoenca/transformacao-bad-bai.html"
+        },
+        {
+          "titulo": "Prorrogação de BAD",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/AuxilioDoenca/prorrogacao-bad.html"
+        },
+        {
+          "titulo": "Inclusão de BAD",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/AuxilioDoenca/inclusao-bad.html"
+        }
+      ]
+    },
+    {
+      "nome": "Institutos",
+      "artigos": [
+        {
+          "titulo": "Envio do extrato de opções",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Institutos/extrato-opcoes.html"
+        },
+        {
+          "titulo": "PDV - Recebimento de documentos e inclusão de requerimento",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Institutos/pdv-documentos.html"
+        },
+        {
+          "titulo": "Portabilidade",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Institutos/portabilidade.html"
+        },
+        {
+          "titulo": "Pagamento de resgate - PostalPrev e BD",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Institutos/pagamento-resgate.html"
+        },
+        {
+          "titulo": "Resgate - Participante ativo",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Institutos/resgate-ativo.html"
+        },
+        {
+          "titulo": "Resgate por procuração",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/Institutos/resgate-procuracao.html"
+        }
+      ]
+    },
+    {
+      "nome": "Postalis Online",
+      "artigos": [
+        {
+          "titulo": "Fale Conosco - Orientações para abertura de chamado",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/PostalisOnline/fale-conosco.html"
+        },
+        {
+          "titulo": "Gerar senha de acesso ao Postalis Online",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/PostalisOnline/gerar-senha.html"
+        },
+        {
+          "titulo": "Acesso ao painel de pensionista",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/PostalisOnline/painel-pensionista.html"
+        },
+        {
+          "titulo": "Emissão de contracheque",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/PostalisOnline/emissao-contracheque.html"
+        },
+        {
+          "titulo": "Atualização cadastral",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/PostalisOnline/atualizacao-cadastral.html"
+        },
+        {
+          "titulo": "Atualização de beneficiários",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/PostalisOnline/atualizacao-beneficiarios.html"
+        }
+      ]
+    },
+    {
+      "nome": "Base de Conhecimento",
+      "artigos": [
+        {
+          "titulo": "Abertura de demanda para GBE",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/BaseConhecimento/demanda-gbe.html"
+        },
+        {
+          "titulo": "Simulação de percentual de contribuição",
+          "data": "01/01/2024",
+          "autor": "Gabriel Talles de Magalhães",
+          "caminho": "./Respostas/BaseConhecimento/simulacao-contribuicao.html"
+        }
+      ]
+    },
+    {
+      "nome": "Seguro de Vida",
+      "artigos": []
+    },
+    {
+      "nome": "Pensão e Pecúlio",
+      "artigos": []
+    },
+    {
+      "nome": "Imposto de Renda",
+      "artigos": []
+    },
+    {
+      "nome": "Outros Assuntos",
+      "artigos": []
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASHBOARD</title>
+    <link rel="icon" type="image/png" href="./Arquivos/Imagens/logo.png">
+    <link rel="stylesheet" href="./CSS/index.css">
+    <link rel="stylesheet" href="./CSS/dashboard.css">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="./Arquivos/Imagens/logo.png" alt="Logo Postalis" class="logo">
+            </div>
+            <div class="user-info">
+                <span id="userName">Carregando...</span>
+                <button id="logoutBtn" class="logout-btn" title="Sair">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <section class="quick-access">
+            <h2>Acesso</h2>
+            <div class="quick-access-grid">
+                <a href="./notas-teste.html" class="quick-access-card">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M14 2v6h6M8 13h8M8 17h8M8 9h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span>Notas</span>
+                </a>
+                
+                <a href="./treinamentos.html" class="quick-access-card">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span>Treinamentos</span>
+                </a>
+                
+                <a href="./arquivos.html" class="quick-access-card">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2v11z" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>Arquivos</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="calendar-section">
+            <div class="datetime-weather">
+                <div class="datetime">
+                    <div id="date" class="date"></div>
+                    <div id="time" class="time"></div>
+                </div>
+                <div id="weather" class="weather">
+                    <div class="weather-icon"></div>
+                    <div class="weather-info">
+                        <span class="temperature"></span>
+                        <span class="description"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="calendar" class="calendar"></div>
+            <div class="events-sidebar">
+                <h3>Eventos do Mês</h3>
+                <div class="events-list" id="eventsList">
+                    <!-- Events will be populated by JavaScript -->
+                </div>
+                <button id="addEventBtn" class="add-event-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Adicionar Evento
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD4YxKISCBoT40DbnXYbaCGUN8OrMqdPFo",
+            authDomain: "central-de-suporte.firebaseapp.com",
+            projectId: "central-de-suporte",
+            storageBucket: "central-de-suporte.firebasestorage.app",
+            messagingSenderId: "165275848027",
+            appId: "1:165275848027:web:c2f9122e5e533f7e6cde7e"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Auth check
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = 'admin-login2.html';
+                return;
+            }
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            const userData = userDoc.data();
+            document.getElementById('userName').textContent = `Olá, ${userData.nome}`;
+        });
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            auth.signOut().then(() => {
+                window.location.href = 'admin-login2.html';
+            });
+        });
+
+        // Date and Time
+        function updateDateTime() {
+            const now = new Date();
+            const dateOptions = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const timeOptions = { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            };
+
+            document.getElementById('date').textContent = now.toLocaleDateString('pt-BR', dateOptions);
+            document.getElementById('time').textContent = now.toLocaleTimeString('pt-BR', timeOptions);
+        }
+
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // Weather API
+        async function getWeather() {
+            const apiKey = 'YOUR_WEATHERAPI_KEY'; // Get from weatherapi.com
+            const city = 'Brasilia';
+            try {
+                const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&lang=pt`);
+                const data = await response.json();
+                
+                const weatherDiv = document.getElementById('weather');
+                weatherDiv.querySelector('.temperature').textContent = `${Math.round(data.current.temp_c)}°C`;
+                weatherDiv.querySelector('.description').textContent = data.current.condition.text;
+                weatherDiv.querySelector('.weather-icon').innerHTML = `<img src="${data.current.condition.icon}" alt="Weather icon">`;
+            } catch (error) {
+                console.error('Erro ao buscar clima:', error);
+            }
+        }
+
+        getWeather();
+        setInterval(getWeather, 600000); // Update every 10 minutes
+
+        // Calendar
+        function generateCalendar() {
+            const now = new Date();
+            const month = now.getMonth();
+            const year = now.getFullYear();
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            
+            const calendarDiv = document.getElementById('calendar');
+            const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+                              'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            
+            let calendarHTML = `
+                <div class="calendar-header">
+                    <h3>${monthNames[month]} ${year}</h3>
+                </div>
+                <div class="calendar-grid">
+                    <div class="weekday">Dom</div>
+                    <div class="weekday">Seg</div>
+                    <div class="weekday">Ter</div>
+                    <div class="weekday">Qua</div>
+                    <div class="weekday">Qui</div>
+                    <div class="weekday">Sex</div>
+                    <div class="weekday">Sáb</div>
+            `;
+
+            for (let i = 0; i < firstDay.getDay(); i++) {
+                calendarHTML += '<div class="calendar-day empty"></div>';
+            }
+
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const isToday = day === now.getDate();
+                calendarHTML += `
+                    <div class="calendar-day ${isToday ? 'today' : ''}">
+                        ${day}
+                    </div>
+                `;
+            }
+
+            calendarHTML += '</div>';
+            calendarDiv.innerHTML = calendarHTML;
+        }
+
+        generateCalendar();
+
+        // Custom events management
+        const monthEvents = {
+            // Example structure:
+            "2024-03": [
+                {
+                    date: "2024-03-21",
+                    title: "Reunião Mensal",
+                    type: "meeting",
+                    description: "Reunião de acompanhamento"
+                },
+                {
+                    date: "2024-03-25",
+                    title: "Prazo Final",
+                    type: "deadline",
+                    description: "Entrega de relatórios"
+                }
+            ]
+        };
+
+        function updateEventsList() {
+            const now = new Date();
+            const monthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+            const events = monthEvents[monthKey] || [];
+            
+            const eventsListDiv = document.getElementById('eventsList');
+            eventsListDiv.innerHTML = events.length ? events.map(event => `
+                <div class="event-item ${event.type}">
+                    <div class="event-date">${formatEventDate(event.date)}</div>
+                    <div class="event-title">${event.title}</div>
+                    <div class="event-description">${event.description}</div>
+                </div>
+            `).join('') : '<p class="no-events">Nenhum evento cadastrado</p>';
+        }
+
+        function formatEventDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: 'short'
+            });
+        }
+
+        // Initialize events display
+        updateEventsList();
+    </script>
+</body>
+</html>

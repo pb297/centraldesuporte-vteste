@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Artigos com Markdown</title>
+    <link rel="icon" type="image/png" href="../Arquivos/Imagens/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --cor-primaria: #004a8d;
+            --cor-secundaria: #e9f2fa;
+            --cor-destaque: #FFD700;
+            --cor-destaque-hover: #FFA500;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        .header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../Arquivos/Imagens/capa.png');
+            background-size: cover;
+            padding: 1rem 2rem;
+            height: 120px;
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .logo {
+            width: 80px;
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.4));
+        }
+
+        .titulo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .titulo {
+            color: white;
+            font-size: 1.8em;
+            font-weight: 350;
+            letter-spacing: 0.3px;
+        }
+
+        .subtitulo {
+            color: #e0e0e0;
+            font-size: 1em;
+            font-weight: 300;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+
+        .controles-superiores {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.95em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+
+        .btn-primario {
+            background: linear-gradient(135deg, var(--cor-primaria), #0066cc);
+            color: white;
+        }
+
+        .btn-secundario {
+            background: #666;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, var(--cor-destaque), var(--cor-destaque-hover));
+            color: #333;
+        }
+
+        .editor-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .editor-header {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .editor-input {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .editor-input:focus {
+            outline: none;
+            border-color: var(--cor-primaria);
+            box-shadow: 0 0 8px rgba(0,74,141,0.2);
+        }
+
+        .editor-dual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            height: 60vh;
+        }
+
+        .editor-pane {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        #markdownContent {
+            width: 100%;
+            height: 100%;
+            padding: 1rem;
+            border: none;
+            resize: none;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+
+        #preview {
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .markdown-alert {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--cor-primaria);
+        }
+
+        .markdown-alert p {
+            margin: 0;
+            font-size: 0.95em;
+            color: #004a8d;
+        }
+
+        @media (max-width: 768px) {
+            .editor-dual {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            #markdownContent {
+                height: 40vh;
+            }
+            
+            #preview {
+                height: 40vh;
+            }
+            
+            .header {
+                height: auto;
+                padding: 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.85em;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 12px 12px 0 0;
+            z-index: 1000;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 25px;
+            border: 1px solid var(--cor-primaria);
+            border-radius: 10px;
+            width: 70%;
+            max-width: 600px;
+            position: relative;
+            animation: modalOpen 0.3s;
+        }
+
+        @keyframes modalOpen {
+            from {transform: scale(0.9); opacity: 0}
+            to {transform: scale(1); opacity: 1}
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--cor-primaria);
+        }
+
+        .error-preview {
+            color: #dc3545;
+            padding: 1rem;
+            background: #f8d7da;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="../Arquivos/Imagens/logo.png" alt="Logo da Empresa" class="logo">
+        <div class="titulo-container">
+            <h1 class="titulo">Editor de Artigos</h1>
+            <h2 class="subtitulo">Central de Suporte - GRC</h2>
+        </div>
+    </header>
+
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Atenção</h2>
+            <div id="modalText"></div>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="controles-superiores">
+            <button onclick="window.location.href='admin-dashboard.html'" class="btn btn-secundario">
+                ← Voltar ao Dashboard
+            </button>
+            <a href="orientacoes.pdf" target="_blank" class="btn btn-primario">
+                Guia de Markdown
+            </a>
+        </div>
+
+        <form id="formPublicacao" class="editor-form">
+            <div class="editor-header">
+                <input type="text" class="editor-input" placeholder="Título do Artigo" required id="titulo">
+                <input type="text" class="editor-input" placeholder="Autor" required id="autor">
+                <input type="date" class="editor-input" required id="data">
+                <select class="editor-input" required id="tema">
+                    <option value="">Selecione o Tema</option>
+                    <option value="Empréstimo">Empréstimo</option>
+                    <option value="Aposentadoria">Aposentadoria</option>
+                    <option value="Auxílio Doença">Auxílio Doença</option>
+                </select>
+            </div>
+
+            <div class="markdown-alert">
+                <p>📘 Markdown é uma linguagem simples para formatação de texto. Use o botão "Guia de Markdown" acima para acessar a referência completa.</p>
+            </div>
+
+            <div class="editor-dual">
+                <div class="editor-pane">
+                    <textarea 
+                        id="markdownContent" 
+                        placeholder="Escreva seu conteúdo em Markdown aqui..."
+                        spellcheck="false"></textarea>
+                </div>
+                <div class="editor-pane" id="preview"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primario" style="margin-top: 1rem; align-self: center;">
+                Gerar HTML
+            </button>
+        </form>
+    </div>
+
+    <footer>
+        © 2025 GRC/DGP - Central de Suporte
+    </footer>
+
+    <script>
+        // Configuração inicial
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configurar o Marked
+            marked.setOptions({
+                breaks: true,
+                gfm: true,
+                tables: true,
+                pedantic: false,
+                sanitize: false,
+                smartLists: true
+            });
+
+            // Sistema de Pré-visualização
+            const markdownInput = document.getElementById('markdownContent');
+            const previewPane = document.getElementById('preview');
+
+            const updatePreview = () => {
+                try {
+                    previewPane.innerHTML = marked.parse(markdownInput.value);
+                } catch (error) {
+                    previewPane.innerHTML = `<div class="error-preview">Erro na renderização: ${error.message}</div>`;
+                }
+            };
+
+            markdownInput.addEventListener('input', updatePreview);
+            updatePreview();
+
+            // Sistema de Modal
+            const modal = document.getElementById('customModal');
+            const modalText = document.getElementById('modalText');
+            const closeBtn = document.querySelector('.close');
+
+            const showModal = (content, isError = false) => {
+                modalText.innerHTML = content;
+                modal.style.display = 'block';
+            };
+
+            const closeModal = () => {
+                modal.style.display = 'none';
+            };
+
+            closeBtn.onclick = closeModal;
+            window.onclick = (e) => e.target === modal && closeModal();
+
+            // Sistema de Download
+            const downloadHTML = (content, filename) => {
+                const blob = new Blob([content], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                
+                link.href = url;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                
+                setTimeout(() => {
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            };
+
+            // Validação de Formulário
+            const validateForm = (data) => {
+                const errors = [];
+                if (!data.titulo.trim()) errors.push('Título é obrigatório');
+                if (!data.autor.trim()) errors.push('Autor é obrigatório');
+                if (!data.data) errors.push('Data é obrigatória');
+                if (!data.tema) errors.push('Tema é obrigatório');
+                if (!data.conteudo.trim()) errors.push('Conteúdo não pode estar vazio');
+                return errors;
+            };
+
+            // Gerar HTML Final
+            const generateFinalHTML = (data, content) => {
+                const slugify = (text) => text
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/[^a-z0-9-]/g, '');
+
+                return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${data.titulo}</title>
+    <link rel="icon" type="image/png" href="../../Arquivos/Imagens/logo.png">
+    <style>
+        /* ... (estilos mantidos do template fornecido) ... */
+    </style>
+</head>
+<body>
+    <header class="header-artigo">
+        <a href="../../Páginas/${slugify(data.tema)}.html" class="btn-voltar">Voltar</a>
+    </header>
+
+    <main class="conteudo-artigo">
+        <div class="card-artigo">
+            <h2 class="titulo-artigo">${data.titulo}</h2>
+            
+            <div class="metadados-artigo">
+                <p><strong>Data da última alteração:</strong> ${new Date(data.data).toLocaleDateString('pt-BR')}</p>
+                <p><strong>Autor:</strong> ${data.autor}</p>
+            </div>
+            
+            <div class="texto-artigo">
+                ${content}
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        gabriel.talles@postalis.org.br
+    </footer>
+</body>
+</html>`;
+            };
+
+            // Evento de Submit
+            document.getElementById('formPublicacao').addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const formData = {
+                    titulo: document.getElementById('titulo').value,
+                    autor: document.getElementById('autor').value,
+                    data: document.getElementById('data').value,
+                    tema: document.getElementById('tema').value,
+                    conteudo: document.getElementById('markdownContent').value
+                };
+
+                // Validação
+                const errors = validateForm(formData);
+                if (errors.length > 0) {
+                    showModal(errors.map(e => `• ${e}`).join('<br>'), true);
+                    return;
+                }
+
+                try {
+                    // Processamento
+                    const parsedContent = marked.parse(formData.conteudo);
+                    const finalHTML = generateFinalHTML(formData, parsedContent);
+                    const filename = formData.titulo
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/(^-|-$)/g, '') + '.html';
+
+                    // Download
+                    downloadHTML(finalHTML, filename);
+
+                    // Feedback
+                    showModal(`<div style="color: #155724;">
+                        ✅ Arquivo <strong>${filename}</strong> gerado com sucesso!<br>
+                        Verifique sua pasta de downloads
+                    </div>`);
+
+                    // Enviar e-mail
+                    const subject = encodeURIComponent(`Novo artigo: ${formData.titulo}`);
+                    const body = encodeURIComponent(
+                        `Detalhes do artigo:\n\n` +
+                        `Título: ${formData.titulo}\n` +
+                        `Tema: ${formData.tema}\n` +
+                        `Arquivo: ${filename}`
+                    );
+                    window.location.href = `mailto:gabriel.talles@postalis.org.br?subject=${subject}&body=${body}`;
+
+                } catch (error) {
+                    console.error('Erro:', error);
+                    showModal(`❌ Erro crítico: ${error.message}`, true);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

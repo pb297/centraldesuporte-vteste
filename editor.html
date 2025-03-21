@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar publicação</title>
+    <link rel="icon" type="image/png" href="../Arquivos/Imagens/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        .header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../Arquivos/Imagens/capa.png');
+            background-size: cover;
+            padding: 1rem 2rem;
+            height: 180px;
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            width: 120px;
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.4));
+        }
+
+        .titulo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .titulo {
+            color: white;
+            font-size: 1.8em;
+            font-weight: 350;
+            letter-spacing: 0.3px;
+        }
+
+        .subtitulo {
+            color: #e0e0e0;
+            font-size: 1em;
+            font-weight: 300;
+        }
+
+        .editor-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .editor-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.2s;
+        }
+
+        .editor-input:focus {
+            outline: none;
+            border-color: #004a8d;
+            box-shadow: 0 0 12px rgba(0,74,141,0.2);
+        }
+
+        .editor-textarea {
+            min-height: 300px;
+            resize: vertical;
+        }
+
+        .editor-acoes {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-salvar {
+            background: linear-gradient(135deg, #004a8d, #0066cc);
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+
+        .btn-salvar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
+        }
+
+        .btn-cancelar {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #333;
+        }
+
+        .btn-cancelar:hover {
+            background: #eaeaea;
+            border-color: #ccc;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.85em;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 12px 12px 0 0;
+            z-index: 1000;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 25px;
+            border: 1px solid #004a8d;
+            border-radius: 10px;
+            width: 70%;
+            max-width: 600px;
+            position: relative;
+            animation: modalOpen 0.3s;
+        }
+
+        @keyframes modalOpen {
+            from {transform: scale(0.9); opacity: 0}
+            to {transform: scale(1); opacity: 1}
+        }
+
+        .alert {
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #004a8d;
+        }
+
+        .modal-content h2 {
+            color: #004a8d;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .editor-container {
+                margin: 30px 15px;
+                padding: 15px;
+            }
+
+            .header {
+                height: auto;
+                padding: 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                width: 80px;
+            }
+
+            .titulo {
+                font-size: 1.4em;
+            }
+
+            .subtitulo {
+                font-size: 0.9em;
+            }
+
+            .editor-acoes {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Atenção ⚠️</h2>
+            <div id="modalText">
+                <!-- Conteúdo dinâmico será inserido aqui -->
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <img src="../Arquivos/Imagens/logo.png" alt="Logo da Empresa" class="logo">
+        <div class="titulo-container">
+            <h1 class="titulo">Central de Suporte</h1>
+            <h2 class="subtitulo">Área de Administração</h2>
+        </div>
+    </header>
+
+    <div class="editor-container">
+        <h1 style="color: #004a8d; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px;">Editar publicação</h1>
+        <form id="editorForm">
+            <input type="text" class="editor-input" id="titulo" placeholder="Título" required>
+            <textarea class="editor-input editor-textarea" id="conteudo" placeholder="Conteúdo" required></textarea>
+            <div class="editor-acoes">
+                <button type="submit" class="btn btn-salvar">Salvar Alterações</button>
+                <button type="button" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        © 2025 GRC/DGP
+    </footer>
+
+    <script>
+        // Funções do Modal
+        const modal = {
+            init: () => {
+                modal.element = document.getElementById('customModal');
+                modal.closeBtn = document.querySelector('.close');
+                
+                modal.closeBtn.onclick = modal.close;
+                window.onclick = (event) => {
+                    if (event.target === modal.element) modal.close();
+                }
+            },
+    
+            open: (content) => {
+                document.getElementById('modalText').innerHTML = content;
+                modal.element.style.display = 'block';
+            },
+    
+            close: () => {
+                modal.element.style.display = 'none';
+            }
+        };
+
+        // Carregar artigo existente
+        const carregarArtigo = () => {
+            const params = new URLSearchParams(window.location.search);
+            const caminhoArtigo = decodeURIComponent(params.get('path'));
+
+            // Simulação de carregamento - Substituir por fetch real
+            document.getElementById('titulo').value = 'Carteira Fechada';
+            document.getElementById('conteudo').value = '<p>Conteúdo do artigo...</p>';
+        }
+
+        // Adicionar evento de envio do formulário
+        document.getElementById('editorForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Aqui você implementaria a lógica de salvamento
+            modal.open(`
+                <div class="alert" style="background: #d4edda; border-left-color: #28a745;">
+                    Artigo atualizado com sucesso! Você será redirecionado para o painel de administração.
+                </div>
+            `);
+            
+            // Redirecionar após 2 segundos
+            setTimeout(() => {
+                window.location.href = 'admin-dashboard.html';
+            }, 2000);
+        });
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            modal.init();
+            carregarArtigo();
+        });
+    </script>
+</body>
+</html>

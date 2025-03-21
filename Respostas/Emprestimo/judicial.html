@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cobrança judicial - Empréstimos</title>
+    <link rel="icon" type="image/png" href="../../Arquivos/Imagens/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-artigo {
+            background: linear-gradient(rgba(0,74,141,0.9), rgba(0,74,141,0.95)), url('../../Arquivos/Imagens/capa.png');
+            background-size: cover;
+            padding: 1.5rem 2rem;
+            height: 120px;
+            border-radius: 0 0 25px 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            color: white;
+            position: relative;
+        }
+
+        .btn-voltar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #004a8d, #0066cc);
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .btn-voltar:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #0066cc, #004a8d);
+        }
+
+        .metadados-artigo {
+            background: #eef4fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 0.9em;
+            color: #444;
+        }
+
+        .metadados-artigo p {
+            margin: 5px 0;
+        }
+
+        .conteudo-artigo {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .destaque-vermelho {
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .card-artigo {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .titulo-artigo {
+            color: #004a8d;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #004a8d;
+            padding-bottom: 10px;
+        }
+
+        .texto-artigo {
+            color: #444;
+            line-height: 1.6;
+            font-size: 1em;
+        }
+
+        .texto-artigo p {
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            border-radius: 15px 15px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-artigo">
+        <a href="../../Páginas/emprestimo.html" class="btn-voltar">Voltar</a>
+    </header>
+
+    <main class="conteudo-artigo">
+        <div class="card-artigo">
+            <h2 class="titulo-artigo">Contrato em Cobrança Judicial</h2>
+            
+            <!-- Adição dos metadados -->
+            <div class="metadados-artigo">
+                <p><strong>Data da última alteração:</strong> 30/01/2025</p>
+                <p><strong>Autor:</strong> Gabriel Talles de Magalhães</p>
+            </div>
+            
+            <div class="texto-artigo">
+                <p>Prezado(a),</p>
+                
+                <p>Bom dia/Boa tarde/Boa noite! Espero que esteja bem. Me chamo XX e falo da Central de Atendimento do Postalis.</p>
+                
+                <p>Informo que o seu contrato de empréstimo <span class="destaque-vermelho">NÚMERO DO CONTRATO</span> referente ao plano <span class="destaque-vermelho">PLANO CONTRATADO</span> foi encaminhado para o processo de cobrança judicial, conforme estabelecido no regulamento da carteira de empréstimos. Por se tratar de ação judicial, não compete mais ao Postalis realizar a renegociação.</p>
+                
+                <p>Atualmente o escritório de advocacia responsável pelo seu contrato é o DDL. Portanto, é necessário que entre em contato para verificar a possibilidade de renegociação ou obter mais informações sobre a ação em questão. Segue abaixo dados para contato com o escritório:</p>
+
+                <p>• E-mail: acordo.postalis@ddllaw.com.br<br>• Telefone/WhatsApp: (11) 96382-1515</p>
+
+                <p>Caso persista alguma dúvida, agente um atendimento através do Postalis Online ou entre em contato conosco por telefone. Nos colocamos à disposição para quaisquer novas solicitações ou esclarecimento.</p>
+
+                <p>Atenciosamente,</p>
+                
+                <p>
+                    <strong>Postalis – Instituto de Previdência Complementar</strong><br>
+                    Central de Atendimento: 0800 879 0300<br>
+                    Fale Conosco: <a href="https://goo.gl/ent61X">https://goo.gl/ent61X</a><br>
+                    Visite no YouTube – Descomplica Postalis: <a href="https://goo.gl/qHwFQL">https://goo.gl/qHwFQL</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        gabriel.talles@postalis.org.br
+    </footer>
+</body>
+</html>

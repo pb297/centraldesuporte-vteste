@@ -1,0 +1,28 @@
+{
+    "temas": [
+      {
+        "nome": "Empréstimo",
+        "icone": "💰",
+        "artigos": [
+          {
+            "titulo": "Carteira Fechada",
+            "caminho": "Respostas/Empréstimo/carteira-fechada.html",
+            "data": "2024-02-03",
+            "autor": "Gabriel Talles"
+          }
+        ]
+      },
+      {
+        "nome": "Seguro de Vida",
+        "icone": "🛡️",
+        "artigos": [
+          {
+            "titulo": "Cancelamento de Seguro",
+            "caminho": "Respostas/Seguro/cancelamento.html",
+            "data": "2024-02-10",
+            "autor": "Equipe Técnica"
+          }
+        ]
+      }
+    ]
+  }

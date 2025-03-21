@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devolução de Parcela Paga em Duplicidade - Empréstimos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #004a8d;
+            --primary-light: #0066cc;
+            --secondary-color: #eef4fa;
+            --text-color: #444;
+            --danger-color: #ff0000;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --dark-gray: #333;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(rgba(0,74,141,0.9), rgba(0,74,141,0.95)), url('../../Arquivos/Imagens/capa.png');
+            background-size: cover;
+            color: var(--white);
+            padding: 2rem;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0 0 30px 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .logo i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .header-title {
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn-back {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            transition: var(--transition);
+        }
+
+        .btn-back i {
+            margin-right: 5px;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Content Styles */
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin: 0;
+            text-align: center;
+        }
+
+        .card-metadata {
+            background: var(--secondary-color);
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .metadata-item {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 1rem 0.5rem 0;
+        }
+
+        .metadata-item i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .text-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .highlight-red {
+            color: var(--danger-color);
+            font-weight: bold;
+        }
+
+        .contact-info {
+            background-color: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-info a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+            color: var(--primary-light);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item i {
+            min-width: 25px;
+            color: var(--primary-color);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-content p {
+            margin: 0 1rem;
+        }
+
+        .footer-content i {
+            margin-right: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.5rem 1rem;
+            }
+
+            .logo-container {
+                position: static;
+                margin-bottom: 1rem;
+                justify-content: center;
+            }
+
+            .btn-back {
+                position: static;
+                margin: 1rem auto 0;
+                width: fit-content;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+
+            .card-metadata {
+                flex-direction: column;
+            }
+
+            .metadata-item {
+                margin: 0.3rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-university"></i>
+            </div>
+            <span>Postalis</span>
+        </div>
+        <h1 class="header-title">Central de Atendimento</h1>
+        <a href="../../Páginas/emprestimo.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </header>
+
+    <main class="content">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Devolução de Parcela Paga em Duplicidade</h2>
+            </div>
+            
+            <div class="card-metadata">
+                <div class="metadata-item">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Última atualização: 31/01/2025</span>
+                </div>
+                <div class="metadata-item">
+                    <i class="far fa-user"></i>
+                    <span>Autor: Gabriel Talles de Magalhães</span>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <div class="text-content">
+                    <p>Prezado(a),</p>
+                    
+                    <p>Bom dia/Boa tarde/Boa noite! Espero que esteja bem. Me chamo XX e falo da Central de Atendimento do Postalis.</p>
+                    
+                    <p>Gostaríamos de informar que nossa coordenação responsável pela carteira de empréstimos irá realizar a verificação dos valores recebidos e, caso constatada a duplicidade de pagamento, os valores serão devolvidos automaticamente em sua conta bancária até o dia 00/00 <span class="highlight-red">(CONSULTAR CRONOGRAMA)</span>. Em caso de dúvidas, orientamos que entre em contato com nossa Central de Atendimento.</p>
+                    
+                    <p>Atenciosamente,</p>
+                </div>
+                
+                <div class="contact-info">
+                    <h3><i class="fas fa-address-card"></i> Postalis – Instituto de Previdência Complementar</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>Central de Atendimento: 0800 879 0300</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>Fale Conosco: <a href="https://goo.gl/ent61X" target="_blank">https://goo.gl/ent61X</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-youtube"></i>
+                        <span>Visite no YouTube – Descomplica Postalis: <a href="https://goo.gl/qHwFQL" target="_blank">https://goo.gl/qHwFQL</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p><i class="far fa-envelope"></i> gabriel.talles@postalis.org.br</p>
+            <p><i class="far fa-copyright"></i> 2025 Postalis - Todos os direitos reservados</p>
+        </div>
+    </footer>
+</body>
+</html>

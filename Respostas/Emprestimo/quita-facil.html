@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor Avançado com Markdown</title>
+    <link rel="stylesheet" href="../estilos.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Layout Principal */
+        .admin-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+        .editor-dual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            height: 70vh;
+            margin: 1rem 0;
+        }
+
+        .editor-pane {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow: auto;
+            background: white;
+        }
+
+        #markdownContent {
+            height: 100%;
+            width: 100%;
+            resize: none;
+            border: none;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Guia de Markdown Expandido */
+        .markdown-guide {
+            padding: 1.5rem;
+            background: #f8faff;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid #e0e7ff;
+        }
+
+        .guide-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .guide-section h3 {
+            color: #004a8d;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .guide-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1rem;
+            margin: 0.5rem 0;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+
+        /* Pré-visualização Estilizada */
+        #preview {
+            padding: 1.5rem;
+            background: #f9f9f9;
+        }
+
+        #preview h1 { font-size: 2em; border-bottom: 2px solid #004a8d; padding-bottom: 0.3em; }
+        #preview h2 { font-size: 1.5em; color: #004a8d; }
+        #preview h3 { font-size: 1.3em; }
+        #preview blockquote { border-left: 4px solid #004a8d; padding-left: 1em; color: #666; }
+        #preview code { background: #f0f4ff; padding: 0.2em 0.4em; border-radius: 3px; }
+        #preview pre { background: #1a1a1a; color: white; padding: 1em; border-radius: 6px; overflow: auto; }
+        #preview table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        #preview td, #preview th { border: 1px solid #ddd; padding: 0.5em; }
+        #preview th { background: #004a8d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Controles Superiores Mantidos -->
+        
+        <div class="markdown-guide">
+            <div class="guide-section">
+                <h3>Cabeçalhos</h3>
+                <div class="guide-item">
+                    <code># Título 1</code>
+                    <span>Header 1</span>
+                </div>
+                <div class="guide-item">
+                    <code>## Título 2</code>
+                    <span>Header 2</span>
+                </div>
+            </div>
+
+            <div class="guide-section">
+                <h3>Formatação de Texto</h3>
+                <div class="guide-item">
+                    <code>**negrito**</code>
+                    <span><strong>Texto em negrito</strong></span>
+                </div>
+                <div class="guide-item">
+                    <code>*itálico*</code>
+                    <span><em>Texto em itálico</em></span>
+                </div>
+                <div class="guide-item">
+                    <code>~~riscado~~</code>
+                    <span><s>Texto riscado</s></span>
+                </div>
+            </div>
+
+            <div class="guide-section">
+                <h3>Listas</h3>
+                <div class="guide-item">
+                    <code>- Item</code>
+                    <span>Lista não ordenada</span>
+                </div>
+                <div class="guide-item">
+                    <code>1. Item</code>
+                    <span>Lista ordenada</span>
+                </div>
+                <div class="guide-item">
+                    <code>- [x] Tarefa</code>
+                    <span>Checklist concluído</span>
+                </div>
+            </div>
+
+            <div class="guide-section">
+                <h3>Elementos Complexos</h3>
+                <div class="guide-item">
+                    <code>[Link](URL)</code>
+                    <span><a href="#">Link clicável</a></span>
+                </div>
+                <div class="guide-item">
+                    <code>![Alt](IMG)</code>
+                    <span>Imagem incorporada</span>
+                </div>
+                <div class="guide-item">
+                    <code>```código```</code>
+                    <span>Bloco de código</span>
+                </div>
+                <div class="guide-item">
+                    <code>> Citação</code>
+                    <span><blockquote>Citação em bloco</blockquote></span>
+                </div>
+                <div class="guide-item">
+                    <code>---</code>
+                    <span>Linha horizontal</span>
+                </div>
+            </div>
+
+            <div class="guide-section">
+                <h3>Tabelas</h3>
+                <div class="guide-item">
+                    <code>|Cabeçalho|\n|---|\n|Conteúdo|</code>
+                    <span>Tabela formatada</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="editor-dual">
+            <div class="editor-pane">
+                <textarea 
+                    id="markdownContent" 
+                    placeholder="Escreva seu conteúdo em Markdown..."
+                    spellcheck="false"></textarea>
+            </div>
+            <div class="editor-pane" id="preview"></div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração Avançada do Markdown Parser
+        marked.setOptions({
+            breaks: true,
+            gfm: true,
+            tables: true,
+            pedantic: false,
+            sanitize: false,
+            smartLists: true,
+            smartypants: false,
+            langPrefix: 'language-',
+            highlight: function(code, lang) {
+                return hljs.highlightAuto(code).value;
+            }
+        });
+
+        // Atualização em Tempo Real
+        const updatePreview = () => {
+            const content = document.getElementById('markdownContent').value;
+            document.getElementById('preview').innerHTML = marked.parse(content);
+        };
+
+        document.getElementById('markdownContent').addEventListener('input', updatePreview);
+        window.addEventListener('load', updatePreview);
+
+        // Restante do código de geração mantido
+    </script>
+</body>
+</html>

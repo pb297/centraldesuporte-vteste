@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Central de Suporte</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        :root {
+            --cor-primaria: #004a8d;
+            --cor-secundaria: #e9f2fa;
+            --cor-texto: #333;
+            --cor-destaque: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        .header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../Arquivos/Imagens/capa.png');
+            background-size: cover;
+            padding: 1rem 2rem;
+            height: 180px;
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .logo {
+            width: 120px;
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.4));
+        }
+
+        .titulo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .titulo {
+            color: white;
+            font-size: 1.8em;
+            font-weight: 350;
+            letter-spacing: 0.3px;
+        }
+
+        .subtitulo {
+            color: #e0e0e0;
+            font-size: 1em;
+            font-weight: 300;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .header-dashboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-dashboard h1 {
+            color: var(--cor-primaria);
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .nav-temas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tema-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .tema-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .tema-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--cor-primaria);
+        }
+
+        .tema-titulo {
+            color: var(--cor-primaria);
+            font-size: 1.3rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .artigo-lista {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .artigo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: var(--cor-secundaria);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .artigo-item:hover {
+            background: #e2eaf3;
+            transform: translateX(5px);
+        }
+
+        .artigo-info {
+            flex-grow: 1;
+            margin-right: 1rem;
+        }
+
+        .artigo-titulo {
+            font-size: 0.95rem;
+            margin: 0;
+            color: var(--cor-texto);
+            font-weight: 500;
+        }
+
+        .artigo-acoes {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn-acao {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-acao svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .btn-editar {
+            background: var(--cor-primaria);
+            color: white;
+        }
+
+        .btn-editar:hover {
+            background: #003366;
+        }
+
+        .btn-excluir {
+            background: #cc0000;
+            color: white;
+        }
+
+        .btn-excluir:hover {
+            background: #b30000;
+        }
+
+        .btn-novo {
+            background: linear-gradient(135deg, #004a8d, #0066cc);
+            color: white;
+            padding: 0.7rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-novo:hover {
+            background: var(--cor-destaque);
+            color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255,165,0,0.3);
+        }
+
+        /* Scrollbar styling */
+        .artigo-lista::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .artigo-lista::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .artigo-lista::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .artigo-lista::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+
+        /* Modal de Exclusão */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 25px;
+            border: 1px solid #004a8d;
+            border-radius: 10px;
+            width: 70%;
+            max-width: 600px;
+            position: relative;
+            animation: modalOpen 0.3s;
+        }
+
+        @keyframes modalOpen {
+            from {transform: scale(0.9); opacity: 0}
+            to {transform: scale(1); opacity: 1}
+        }
+
+        .alert {
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #004a8d;
+        }
+
+        .modal-content h2 {
+            color: #004a8d;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--cor-texto);
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 120px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-cancelar {
+            background: #e0e0e0;
+            color: #333;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-confirmar {
+            background: #cc0000;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-confirmar:hover {
+            background: #b30000;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.85em;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 12px 12px 0 0;
+            z-index: 1000;
+        }
+
+        .notificacao {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1100;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .notificacao.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .nav-temas {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-dashboard {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .header {
+                height: auto;
+                padding: 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                width: 80px;
+            }
+            
+            .titulo {
+                font-size: 1.4em;
+            }
+            
+            .subtitulo {
+                font-size: 0.9em;
+            }
+
+            .modal-content {
+                width: 90%;
+                margin: 10% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="../Arquivos/Imagens/logo.png" alt="Logo da Empresa" class="logo">
+        <div class="titulo-container">
+            <h1 class="titulo">Central de Suporte</h1>
+            <h2 class="subtitulo">Painel Administrativo</h2>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <div class="header-dashboard">
+            <h1>Gerenciamento de Conteúdo</h1>
+            <a href="admin-painel.html" class="btn-novo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                    <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"/>
+                </svg>
+                Novo Artigo
+            </a>
+        </div>
+
+        <div class="nav-temas" id="temasContainer"></div>
+    </div>
+
+    <!-- Modal de exclusão -->
+    <div id="excluirModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Confirmação de Exclusão</h2>
+            <p>Tem certeza que deseja excluir o artigo <strong id="tituloArtigo"></strong>?</p>
+            <div class="form-group">
+                <label for="motivoExclusao">Motivo da exclusão:</label>
+                <textarea id="motivoExclusao" placeholder="Descreva o motivo da exclusão..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancelar" id="cancelarExclusao">Cancelar</button>
+                <button class="btn-confirmar" id="confirmarExclusao">Confirmar Exclusão</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificação de sucesso -->
+    <div class="notificacao" id="notificacao">
+        Operação realizada com sucesso!
+    </div>
+
+    <footer>
+        © 2025 GRC/DGP
+    </footer>
+
+    <script>
+        // Função para gerar ID aleatório
+        function gerarId() {
+            return 'exc_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Função para obter data e hora atual formatadas
+        function obterDataHora() {
+            const agora = new Date();
+            const data = agora.toLocaleDateString('pt-BR');
+            const hora = agora.toLocaleTimeString('pt-BR');
+            return { data, hora };
+        }
+
+        // Gerenciamento do modal de exclusão
+        const modal = {
+            element: document.getElementById('excluirModal'),
+            tituloElement: document.getElementById('tituloArtigo'),
+            motivoInput: document.getElementById('motivoExclusao'),
+            closeBtn: document.getElementById('closeModal'),
+            cancelBtn: document.getElementById('cancelarExclusao'),
+            confirmBtn: document.getElementById('confirmarExclusao'),
+            artigoAtual: null,
+            
+            init() {
+                this.closeBtn.addEventListener('click', this.fechar.bind(this));
+                this.cancelBtn.addEventListener('click', this.fechar.bind(this));
+                this.confirmBtn.addEventListener('click', this.confirmarExclusao.bind(this));
+                
+                window.addEventListener('click', (event) => {
+                    if (event.target === this.element) {
+                        this.fechar();
+                    }
+                });
+            },
+            
+            abrir(artigo) {
+                this.artigoAtual = artigo;
+                this.tituloElement.textContent = artigo.titulo;
+                this.motivoInput.value = '';
+                this.element.style.display = 'block';
+            },
+            
+            fechar() {
+                this.element.style.display = 'none';
+                this.artigoAtual = null;
+            },
+            
+            confirmarExclusao() {
+                const motivo = this.motivoInput.value.trim();
+                
+                if (!motivo) {
+                    alert('Por favor, informe o motivo da exclusão.');
+                    return;
+                }
+                
+                const dataHora = obterDataHora();
+                const idExclusao = gerarId();
+                
+                // Objeto com dados da exclusão
+                const dadosExclusao = {
+                    id: idExclusao,
+                    titulo: this.artigoAtual.titulo,
+                    caminho: this.artigoAtual.caminho,
+                    motivo: motivo,
+                    data: dataHora.data,
+                    hora: dataHora.hora
+                };
+                
+                // Enviar e-mail com os dados de exclusão
+                enviarEmailExclusao(dadosExclusao);
+                
+                // Aqui seria a lógica para excluir o artigo
+                console.log('Artigo excluído:', dadosExclusao);
+                
+                // Mostrar notificação
+                notificacao.mostrar('Artigo excluído com sucesso!');
+                
+                this.fechar();
+            }
+        };
+
+        // Gerenciamento de notificações
+        const notificacao = {
+            element: document.getElementById('notificacao'),
+            timeoutId: null,
+            
+            mostrar(mensagem) {
+                this.element.textContent = mensagem;
+                this.element.classList.add('show');
+                
+                if (this.timeoutId) {
+                    clearTimeout(this.timeoutId);
+                }
+                
+                this.timeoutId = setTimeout(() => {
+                    this.ocultar();
+                }, 3000);
+            },
+            
+            ocultar() {
+                this.element.classList.remove('show');
+            }
+        };
+
+        // Função para enviar e-mail (simulada)
+        function enviarEmailExclusao(dados) {
+            // Simulação do envio de e-mail
+            // Em um ambiente real, isso seria uma chamada AJAX para um endpoint do servidor
+            const emailData = {
+                para: 'admin@postalis.org.br',
+                assunto: `Exclusão de Artigo - ID: ${dados.id}`,
+                corpo: `
+                    Solicitação de exclusão de artigo
+                    ------------------------------
+                    ID: ${dados.id}
+                    Título: ${dados.titulo}
+                    Arquivo: ${dados.caminho}
+                    Data: ${dados.data}
+                    Hora: ${dados.hora}
+                    
+                    Motivo: ${dados.motivo}
+                    ------------------------------
+                `
+            };
+            
+            console.log('E-mail enviado:', emailData);
+            // Aqui seria feita uma requisição para enviar o e-mail
+        }
+
+        // Função para carregar os artigos
+        async function carregarArtigos() {
+            try {
+                const response = await fetch('./artigos.json');
+                const data = await response.json();
+                exibirArtigos(data);
+            } catch (error) {
+                console.error('Erro ao carregar artigos:', error);
+                alert('Erro ao carregar a base de artigos. Por favor, tente novamente mais tarde.');
+            }
+        }
+
+        // Função para exibir os artigos
+        function exibirArtigos(temas) {
+            const container = document.getElementById('temasContainer');
+            container.innerHTML = '';
+            
+            temas.forEach(tema => {
+                const card = document.createElement('div');
+                card.className = 'tema-card';
+                
+                card.innerHTML = `
+                    <div class="tema-header">
+                        <h3 class="tema-titulo">${tema.nome}</h3>
+                        <span>${tema.artigos.length} artigos</span>
+                    </div>
+                    <ul class="artigo-lista"></ul>
+                `;
+
+                const lista = card.querySelector('.artigo-lista');
+                
+                tema.artigos.forEach(artigo => {
+                    const item = document.createElement('li');
+                    item.className = 'artigo-item';
+                    
+                    item.innerHTML = `
+                        <div class="artigo-info">
+                            <p class="artigo-titulo">${artigo.titulo}</p>
+                        </div>
+                        <div class="artigo-acoes">
+                            <a href="editor.html?file=${encodeURIComponent(artigo.caminho)}" class="btn-acao btn-editar">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12.8995 6.85453L17.1421 11.0972L7.24264 21H3V16.7574L12.8995 6.85453ZM14.3137 5.4403L16.435 3.319C16.8256 2.92848 17.4587 2.92848 17.8492 3.319L20.6777 6.14743C21.0682 6.53795 21.0682 7.17112 20.6777 7.56164L18.5564 9.68293L14.3137 5.4403Z"/>
+                                </svg>
+                            </a>
+                            <button class="btn-acao btn-excluir" data-titulo="${artigo.titulo}" data-caminho="${artigo.caminho}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM9 11V17H11V11H9ZM13 11V17H15V11H13ZM9 4V6H15V4H9Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                    
+                    lista.appendChild(item);
+                    
+                    // Adicionar evento de exclusão
+                    const btnExcluir = item.querySelector('.btn-excluir');
+                    btnExcluir.addEventListener('click', function() {
+                        const artigo = {
+                            titulo: this.getAttribute('data-titulo'),
+                            caminho: this.getAttribute('data-caminho')
+                        };
+                        modal.abrir(artigo);
+                    });
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarArtigos();
+            modal.init();
+        });
+    </script>
+</body>
+</html>

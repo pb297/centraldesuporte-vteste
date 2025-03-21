@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentuais de Contribuição</title>
+    <link rel="icon" type="image/png" href="../../Arquivos/Imagens/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-artigo {
+            background: linear-gradient(rgba(0,74,141,0.9), rgba(0,74,141,0.95)), url('../../Arquivos/Imagens/capa.png');
+            background-size: cover;
+            padding: 1.5rem 2rem;
+            height: 120px;
+            border-radius: 0 0 25px 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            color: white;
+            position: relative;
+        }
+
+        .btn-voltar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #004a8d, #0066cc);
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .btn-voltar:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #0066cc, #004a8d);
+        }
+
+        .metadados-artigo {
+            background: #eef4fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 0.9em;
+            color: #444;
+        }
+
+        .metadados-artigo p {
+            margin: 5px 0;
+        }
+
+        .conteudo-artigo {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .card-artigo {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .titulo-artigo {
+            color: #004a8d;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #004a8d;
+            padding-bottom: 10px;
+        }
+
+        .texto-artigo {
+            color: #444;
+            line-height: 1.6;
+            font-size: 1em;
+        }
+
+        .texto-artigo p {
+            margin-bottom: 20px;
+        }
+
+        .btn-download {
+            display: inline-block;
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            border-radius: 15px 15px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-artigo">
+        <a href="../../Páginas/arqgrc.html" class="btn-voltar">Voltar</a>
+    </header>
+
+    <main class="conteudo-artigo">
+        <div class="card-artigo">
+            <h2 class="titulo-artigo">Percentuais de Contribuição do Plano de Previdência</h2>
+            
+            <!-- Metadados -->
+            <div class="metadados-artigo">
+                <p><strong>Última atualização:</strong> 03/02/2025</p>
+                <p><strong>Responsável:</strong> Gabriel Talles de Magalhães</p>
+            </div>
+
+            <div class="texto-artigo">
+                <p>O Plano PostalPrev possui três contribuições, sendo elas:</p>
+                
+                <ol style="margin: 20px 0; padding-left: 30px;">
+                    <li style="margin-bottom: 15px;">
+                        <strong>Parcela P (Até 4%):</strong><br>
+                        Parcela principal, obrigatória para quem adere ao plano. Tem contribuição paritária pelos Correios e serve para composição do saldo de contas, benefícios de risco e tem ligação com os prazos de empréstimo.
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong>Parcela K (Até 8% sobre valor que exceder R$ 2.750,00):</strong><br>
+                        Parcela opcional. Serve para cobertura dos benefícios de risco e para composição do saldo de contas. Não tem incidência sobre empréstimo.
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong>Parcela voluntária (15%)</strong><br>
+                        Parcela opcional aplicada sobre todo salário do Participante. Serve apenas para composição do saldo de contas, sem contrapartida dos Correios.
+                    </li>
+                </ol>
+
+                </p>Abaixo é possível fazer download da planilha em Excel para melhor simulação dos valores de contribuição</p>
+                </ul>
+
+                <a href="../Documentos/Percentual de contribuição.xlsx" class="btn-download" download>
+                    Baixar planilha de simulação
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        Contato: gabriel.talles@postalis.
+    </footer>
+</body>
+</html>

@@ -1,0 +1,71 @@
+.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Central de Suporte</title>
+    <link rel="icon" type="image/png" href="./Arquivos/Imagens/logo.png">
+    <link rel="stylesheet" href="./CSS/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Registro de Novo Usuário</h2>
+        
+        <div id="alertBox" class="alert"></div>
+        
+        <form id="registerForm">
+            <div class="input-group">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="email">E-mail Corporativo</label>
+                <input type="email" id="email" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="confirmPassword">Confirme a Senha</label>
+                <input type="password" id="confirmPassword" required>
+            </div>
+            
+            <button type="submit">Registrar</button>
+        </form>
+        
+        <a href="admin-login2.html">Já possui conta? Faça login</a>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showAlert('As senhas não coincidem!', 'error');
+                return;
+            }
+            
+            try {
+                await registerUser(email, password, nome);
+                showAlert('Registro realizado com sucesso!', 'success');
+                setTimeout(() => {
+                    window.location.href = 'admin-login2.html';
+                }, 1500);
+            } catch (error) {
+                showAlert('Erro ao registrar usuário!', 'error');
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>

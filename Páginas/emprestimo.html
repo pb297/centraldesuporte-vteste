@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empréstimos - Central de Suporte</title>
+    <link rel="icon" type="image/png" href="../Arquivos/Imagens/logo.png">
+    <link rel="stylesheet" href="../CSS/paginas.css">
+
+</head>
+<body>
+    <header class="header-emprestimo">
+        <a href="../index.html" class="btn-voltar">Voltar</a>
+        <div class="titulo-secao">
+            <h1>Empréstimos</h1>
+            <p>Orientações sobre a carteira de empréstimo</p>
+        </div>
+    </header>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="Pesquisar...">
+    </div>
+
+    <main class="conteudo-principal">
+        <div class="grid-artigos" id="artigosContainer">
+            <a href="../Respostas/Emprestimo/devparcela.html" class="artigo-card" data-tags="devolução, restituição, pagamento duplicado">
+                <h3 class="artigo-titulo">Devolução de parcela cobrada em duplicidade</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/judicial.html" class="artigo-card" data-tags="judicial, teste, processo legal">
+                <h3 class="artigo-titulo">Contrato de empréstimo em fase de cobrança judicial</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/carteirafechada.html" class="artigo-card" data-tags="carteira, fechada, carteira fechada">
+                <h3 class="artigo-titulo">Carteira de empréstimo fechada</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/parcelainadimplente.html" class="artigo-card" data-tags="inadimplência, inadimplente, atraso">
+                <h3 class="artigo-titulo">Boleto de parcela inadimplente</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/margem.html" class="artigo-card" data-tags="margem, desconto">
+                <h3 class="artigo-titulo">Orientações sobre margem consignável</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/suspensao.html" class="artigo-card" data-tags="suspensão, parcelas, descontos">
+                <h3 class="artigo-titulo">Suspensão de parcelas de empréstimo</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/repactuacao.html" class="artigo-card" data-tags="repactuação, contrato, repactuacao">
+                <h3 class="artigo-titulo">Repctuação automática do contrato</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/renegociacao.html" class="artigo-card" data-tags="renegociação, inadimplente">
+                <h3 class="artigo-titulo">Renegociação de empréstimo</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/suspensao.html" class="artigo-card" data-tags="protesto, cdl, taxa">
+                <h3 class="artigo-titulo">Contrato inadimplente - Taxa de protesto em aberto</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/suspensao.html" class="artigo-card" data-tags="pdv, bloqueio, desligamento">
+                <h3 class="artigo-titulo">Bloqueio - Adesão ao PDV</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/suspensao.html" class="artigo-card" data-tags="suspensão, parcelas, descontos">
+                <h3 class="artigo-titulo">Orientações para solicitação de empréstimo</h3>
+            </a>
+
+            <a href="../Respostas/Emprestimo/quita-facil.html" class="artigo-card" data-tags="quita, quitacao, quitação, renegociação">
+                <h3 class="artigo-titulo">Campanha Quita Fácil</h3>
+            </a>
+        </div>
+
+        <div class="roteiros-section">
+            <h2>Roteiros de Atendimento</h2>
+            <a href="../Respostas/Roteiros/concessao.html" class="item-roteiro">
+                Concessão de Empréstimo - Orientações
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        © 2025 GRC/DGP | gabriel.talles@postalis.org.br
+    </footer>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const articles = document.querySelectorAll('.artigo-card');
+            
+            articles.forEach(article => {
+                const title = article.querySelector('.artigo-titulo').textContent.toLowerCase();
+                const tags = Array.from(article.querySelectorAll('span'))
+                               .map(span => span.textContent.toLowerCase())
+                               .join(' ');
+                               
+                article.style.display = (title.includes(searchTerm) || tags.includes(searchTerm)) 
+                    ? 'block' 
+                    : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

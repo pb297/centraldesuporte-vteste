@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Suporte</title>
+    <link rel="icon" type="image/png" href="./Arquivos/Imagens/logo.png">
+    <link rel="stylesheet" href="./CSS/index.css">
+</head>
+
+<div id="customModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modalText">
+            <!-- Conteúdo dinâmico será inserido aqui -->
+        </div>
+    </div>
+</div>
+
+<body>
+    <header class="header">
+        <img src="./Arquivos/Imagens/logo.png" alt="Logo da Empresa" class="logo">
+        <div class="titulo-container">
+            <h1 class="titulo">Central de Suporte - <span class="ambiente-testes">Versão de testes</span></h1>
+            <h2 class="subtitulo">Gerência de Relacionamento e Comercial | Postalis - Instituto de Previdência Complementar</h2>
+        </div>
+    </header>
+
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="pesquisar">
+    </div>
+
+    <div id="searchResults" class="search-results"></div>
+
+    <div class="menu-superior">
+        <div class="dropdown">
+            <button class="dropbtn">▼</button>
+            <div class="dropdown-content">
+                <a href="./notas-att.html">Atualizações</a>
+                <a href="./admin-login.html">Acesso ADMIN</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Coluna Esquerda -->
+        <div class="sidebar">
+            <div class="video-container">
+                <video controls poster="./Arquivos/Imagens/cap2.png">
+                    <source src="" type="video/mp4">
+                    Seu navegador não suporta vídeos.
+                </video>
+            </div>
+            <div class="documentos">
+                <h3>📄 Documentos Frequentes</h3>
+                <a href="./Arquivos/Documentos/Formulário de Reingresso.docx" class="doc-botao" download>Formulário de Reingresso</a>
+                <a href="./Arquivos/Documentos/FORMULARIO DE CANCELAMENTO - ICATU (2).docx" class="doc-botao" download>Cancelamento - Seguro de Vida</a>
+                <a href="./Arquivos/Documentos/Autorizacao_de_debito_em_conta_corrente_Seguro_Vida (1).docx" class="doc-botao" download>Débito em conta - Seguro de Vida</a>
+                <a href="./Arquivos/Documentos/FORMULARIO_MANUTENCAO_CONTRIBUICAO_5 (1).doc" class="doc-botao" download>Manutenção de contribuição - CAD</a>
+                <a href="./Arquivos/Documentos/FORMULARIO_SUSPENSÃO_CONTRIBUIÇÃO_set2019.doc" class="doc-botao" download>Suspensão de contribuição - CAD</a>
+                <a href="./Arquivos/Documentos/Formulario_dependentes_IR.doc" class="doc-botao" download>Dependente para IR - GBE</a>
+            </div>
+        </div>
+
+        <!-- Coluna Central -->
+        <div class="botoes-centrais" id="botoesCentrais">
+            <a href="./Páginas/emprestimo.html" class="botao" data-search="empréstimo">Empréstimo</a>
+            <a href="./Páginas/aposentadoria.html" class="botao" data-search="aposentadoria">Aposentadoria</a>
+            <a href="./Páginas/bad.html" class="botao" data-search="auxílio doença">Auxílio Doença</a>
+            <a href="./Páginas/institutos.html" class="botao" data-search="institutos">Institutos</a>
+            <a href="./Páginas/postalisonline.html" class="botao" data-search="postalis online">Postalis Online</a>
+            <a href="./Páginas/arqgrc.html" class="botao" data-search="arquivos grc">Base de Conhecimento</a>
+            <a href="./Páginas/pensao.html" class="botao" data-search="pensão e pecúlio">Pensão e Pecúlio</a>
+            <a href="./Páginas/seguro.html" class="botao" data-search="seguro de vida">Seguro de Vida</a>
+            <a href="./Páginas/ir.html" class="botao" data-search="imposto de renda">Imposto de Renda</a>
+            <a href="./Páginas/outros.html" class="botao" data-search="outros assuntos">Outros Assuntos</a>
+        </div>
+
+        <!-- Coluna Direita -->
+        <div class="sidebar">
+            <h3>🔗 Links Úteis</h3>
+            <div class="links-uteis">
+                <div class="link-item">
+                    <a href="https://meet.google.com/hrd-jziu-fza">Teams - Suporte</a>
+                </div>
+                <div class="link-item">
+                    <a href="https://meet.google.com/iuh-hrbg-vmf">Teams - Empréstimo</a>
+                </div>
+                <div class="link-item">
+                    <a href="https://postalis.bitrix24.com/stream/">Bitrix</a>
+                </div>
+                <div class="link-item">
+                    <a href="http://intranet.postalis.org.br/">Intranet</a>
+                </div>
+                <div class="link-item">
+                    <a href="https://login.lg.com.br/login/postalis">RH Digital</a>
+                </div>
+                <div class="link-item">
+                    <a href="https://postalis.chat.comunix.tech/">Comunix Phone</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2025 GRC/DGP
+    </footer>
+
+    <button class="chatbot-btn" id="chatbotButton">
+        *
+    </button>
+
+    <div class="chatbot-container" id="chatbotContainer">
+        <iframe 
+            src="https://typebot.co/stella-grc" 
+            class="chatbot-iframe"
+            allow="microphone; camera"
+        ></iframe>
+    </div>
+
+    <script>
+    // Funções do Modal
+    const modal = {
+        init: () => {
+            modal.element = document.getElementById('customModal');
+            modal.closeBtn = document.querySelector('.close');
+            
+            modal.closeBtn.onclick = modal.close;
+            window.onclick = (event) => {
+                if (event.target === modal.element) modal.close();
+            }
+        },
+
+        open: (content, imageUrl = null) => {
+            const modalContent = `
+                <div class="alert info">
+                    ${imageUrl ? `<img src="${imageUrl}" alt="Aviso" class="modal-image">` : ''}
+                    ${content}
+                </div>
+            `;
+            
+            document.getElementById('modalText').innerHTML = modalContent;
+            modal.element.style.display = 'block';
+        },
+
+        close: () => {
+            modal.element.style.display = 'none';
+        }
+    };
+
+    // Funções do Chatbot
+    const chat = {
+        init: () => {
+            chat.button = document.getElementById('chatbotButton');
+            chat.container = document.getElementById('chatbotContainer');
+            chat.isOpen = false;
+
+            chat.button.addEventListener('click', chat.toggle);
+            document.addEventListener('click', chat.closeOnClickOutside);
+        },
+
+        toggle: () => {
+            chat.isOpen = !chat.isOpen;
+            chat.container.style.display = chat.isOpen ? 'block' : 'none';
+            chat.button.textContent = chat.isOpen ? 'Fechar' : '*';
+            chat.button.classList.toggle('active', chat.isOpen);
+        },
+
+        closeOnClickOutside: (event) => {
+            if (chat.isOpen && 
+               !chat.container.contains(event.target) && 
+               event.target !== chat.button) {
+                chat.toggle();
+            }
+        }
+    };
+
+    // Funções de Pesquisa
+    const search = {
+        articles: [],
+        
+        init: async () => {
+            try {
+                const response = await fetch('./artigos.json');
+                if (!response.ok) throw new Error('Arquivo de artigos não encontrado');
+                const data = await response.json();
+                
+                if (!data || !data.temas) {
+                    throw new Error('Estrutura de dados inválida');
+                }
+                
+                search.articles = Object.values(data.temas).flat();
+                
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.addEventListener('input', search.handleInput);
+                }
+            } catch (error) {
+                console.error('Erro na inicialização:', error);
+                modal.open(`
+                    <div class="alert error">
+                        <h3>⚠️ Atenção</h3>
+                        <p>Erro ao carregar artigos:</p>
+                        <p class="error-message">${error.message}</p>
+                    </div>
+                `);
+            }
+        },
+
+        handleInput: function(e) {
+            const term = e.target.value.trim().toLowerCase();
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (!term) {
+                resultsContainer.style.display = 'none';
+                return;
+            }
+
+            const results = search.articles.filter(article => {
+                if (!article.title || !article.content || !article.keywords) return false;
+                const searchText = `${article.title} ${article.content} ${article.keywords}`.toLowerCase();
+                return searchText.includes(term);
+            });
+            
+            search.displayResults(results, term, resultsContainer);
+        },
+
+        displayResults: (results, term, container) => {
+            if (results.length === 0) {
+                container.innerHTML = `
+                    <div class="result-item no-results">
+                        <p>Nenhum resultado encontrado para "<span class="search-term">${term}</span>"</p>
+                        <div class="search-suggestions">
+                            Tente buscar por outros termos ou verifique a ortografia
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = results.map(article => `
+                    <div class="result-item">
+                        <a href="${article.url || '#'}" class="result-link">
+                            <div class="result-title">${search.highlight(article.title, term)}</div>
+                            <div class="result-excerpt">${search.highlight(article.content.substring(0, 150)}...</div>
+                            <div class="result-keywords">
+                                <small>Tags: ${search.highlight(article.keywords, term)}</small>
+                            </div>
+                        </a>
+                    </div>
+                `).join('');
+            }
+
+            container.style.display = 'block';
+        },
+
+        highlight: (text, term) => {
+            if (!text || !term) return text || '';
+            const regex = new RegExp(`(${term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+    };
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+        modal.init();
+        chat.init();
+        search.init();
+        
+        // Mensagem Inicial de Boas-vindas com imagem
+        setTimeout(() => {
+            modal.open(`
+                <h3>👋 Bem-vindo!</h3>
+                <p>O sistema está em desenvolvimento e aprimoramento contínuo.</p>
+                <p>Em caso de dúvidas, utilize o chat de atendimento.</p>
+            `, './Arquivos/Imagens/aviso.png');
+        }, 500);
+    });
+</script>
+</body>
+</html>
